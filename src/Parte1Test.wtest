@@ -1,0 +1,51 @@
+import marcas.*
+import jarras.*
+import carpas.*
+import personas.*
+import paises.*
+
+test "test requerimientos primera parte" {
+	//Creamos una Marca y Una Jarra con Cerveza
+	const hofbrau = new Rubia(graLupuloXLitro=4, paisFabricacion=[alemania],graduacion=8)
+	const jarrita = new Jarra(marca=[hofbrau], litros=0.5)
+	
+	//1
+	assert.that(jarrita.contenidoDeAlcohol()== 0.04)
+	
+	const jarrita2 = new Jarra(marca=[hofbrau], litros=0.7)
+	const pedro = new Persona(peso=80, jarrasCompradas=[jarrita,jarrita2],leGustaMusicaTradicional=true, nivelDeAguante=7, nacionalidad=[alemania])
+	
+	//2
+	assert.that(pedro.totalAlcoholIngerido()== 0.096)
+	
+	//3
+	assert.that(pedro.estaEbrio())
+	
+	//Creamos dos nuevas cervezas con diferentes valores de gramos de lúpulo y graduación.
+	const superLupulo = new Rubia(graLupuloXLitro=5, paisFabricacion=[alemania], graduacion=8)
+	const super9 = new Rubia(graLupuloXLitro=4, paisFabricacion=[alemania], graduacion=9)
+	const guiness = new Negra(graLupuloXLitro=10, paisFabricacion=[inglaterra])
+	const barbaRoja = new Roja(graLupuloXLitro=5, paisFabricacion=[argentina])
+	
+	//4
+	//ElBelga y ElCheco tienen gustos diferentes de cerveza.
+	const elBelga = new Belga(peso=90, jarrasCompradas=[jarrita,jarrita2],leGustaMusicaTradicional=true, nivelDeAguante=7, nacionalidad=[belgica])
+	const elCheco = new Checa(peso=100, jarrasCompradas=[jarrita,jarrita2],leGustaMusicaTradicional=true, nivelDeAguante=7, nacionalidad=[checoslovaquia])
+	
+	graduacionReglamentaria.graduacion(10)
+	
+	//Verificando si les gustan estas nuevas cervezas con diferente lúpulo y graduación
+	//ElBelga: le gustan las cerveza con mas 4 gramos de lúpulo.
+	assert.that(not elBelga.leGustanMarcas(hofbrau))
+	assert.that(elBelga.leGustanMarcas(superLupulo))
+	assert.that(not elBelga.leGustanMarcas(super9))
+	assert.that(elBelga.leGustanMarcas(guiness))
+	assert.that(elBelga.leGustanMarcas(barbaRoja))
+		
+	//ElCheco: le gustan cervezas con mas de 8 de graduación
+	assert.that(not elCheco.leGustanMarcas(hofbrau))
+	assert.that(elCheco.leGustanMarcas(super9))
+	assert.that(not elCheco.leGustanMarcas(superLupulo))
+	assert.that(elCheco.leGustanMarcas(guiness))
+	assert.that(elCheco.leGustanMarcas(barbaRoja))
+}

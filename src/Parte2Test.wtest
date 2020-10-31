@@ -1,0 +1,50 @@
+import marcas.*
+import jarras.*
+import carpas.*
+import personas.*
+import paises.*
+
+test "test requerimientos segunda parte" {
+	
+	graduacionReglamentaria.graduacion(5)
+	
+	assert.that(graduacionReglamentaria.graduacion()==5)
+	const hofbrau = new Rubia(graLupuloXLitro=4, paisFabricacion=[alemania],graduacion=8)
+	const guiness = new Negra(graLupuloXLitro=7, paisFabricacion=[inglaterra])
+		
+	const elBelga = new Belga(peso=90, leGustaMusicaTradicional=true, nivelDeAguante=7, nacionalidad=[belgica])
+	const elAleman = new Aleman(peso=100,leGustaMusicaTradicional=true, nivelDeAguante=7, nacionalidad=[alemania]) 
+	const elCheco = new Checa(peso=100,leGustaMusicaTradicional=true, nivelDeAguante=7, nacionalidad=[checoslovaquia]) 
+	
+	const carpaHofbrau = new Carpa(cantLimiteAdmitida=3,personasDentroDeCarpa=[elCheco,elBelga],hayBandaMusicaTradicional=true,marcaCerveza=[hofbrau])
+	const carpaGuiness = new Carpa(cantLimiteAdmitida=25,hayBandaMusicaTradicional=true,marcaCerveza=[guiness])
+		
+	//5
+	assert.that(elAleman.quiereEntrar(carpaHofbrau))
+	
+	//6
+	assert.that(carpaHofbrau.dejarIngresar(elAleman))
+	assert.that(carpaHofbrau.dejarIngresar(elBelga))
+	assert.that(carpaHofbrau.dejarIngresar(elCheco))
+	//7
+	assert.that(carpaHofbrau.puedeEntrar(elAleman))
+		
+	//8
+	assert.that(carpaHofbrau.personasDentroDeCarpa().size()==2)
+	carpaHofbrau.ingresar(elAleman)
+	assert.that(carpaHofbrau.personasDentroDeCarpa().size()==3)
+	
+	//9
+	carpaHofbrau.servirJarra(elAleman,0.7)
+	assert.that(elAleman.jarrasCompradas().size()==1)
+	
+	carpaHofbrau.servirJarra(elAleman,0.9)
+	assert.that(elAleman.jarrasCompradas().size()==2)
+	
+	//10
+	assert.that(carpaHofbrau.cantEbriosEmpedernidos()==1)
+		
+	//11
+	assert.that(elAleman.esPatriota())		
+}
+
